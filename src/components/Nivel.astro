@@ -1,0 +1,670 @@
+---
+// src/components/Nivel.astro
+---
+
+<div class="game-container">
+  <div class="modal-overlay" id="modal-reglas-nv1">
+    <div class="modal-content">
+      <h2>📜 Reglas del Juego - Nivel 1</h2>
+      <hr />
+      <ul class="reglas-lista">
+        <li>
+          <strong>Objetivo:</strong> Estructurar correctamente un formulario web semántico
+          en HTML.
+        </li>
+        <li>
+          <strong>Cómo jugar:</strong> Arrastra las etiquetas de la columna izquierda
+          y suéltalas en los espacios del formulario central.
+        </li>
+        <li>
+          <strong>Interactividad:</strong> Verás cómo se genera el código HTML y la
+          previsualización nativa.
+        </li>
+        <li>
+          <strong>Tiempo límite:</strong> Dispones de 1 minuto y medio (01:30) para
+          completar el desafío.
+        </li>
+      </ul>
+      <button id="btn-aceptar-reglas-nv1" class="btn-modal"
+        >¡Entendido, a jugar!</button
+      >
+    </div>
+  </div>
+
+  <header class="game-header">
+    <h1>Estructura el formulario - HTML Semántico</h1>
+    <div class="header-controls">
+      <div class="stats">
+        <span
+          ><strong>Puntuación:</strong>
+          <span class="score-nv1">0</span> / 100</span
+        >
+        <span><strong>Tiempo:</strong> <span id="timer-nv1">01:30</span></span>
+      </div>
+      <div class="actions">
+        <button id="btn-jugar-nv1">Jugar</button>
+        <button id="btn-barajar-nv1" disabled>Barajar</button>
+        <button id="btn-comprobar-nv1" disabled>Comprobar</button>
+        <button id="btn-reiniciar-nv1" disabled>Reiniciar</button>
+        <button id="btn-siguiente-nv1" disabled>Siguiente nivel</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="alert-message alert-msg-nv1"></div>
+
+  <main class="game-board">
+    <section class="panel tools-panel">
+      <h2>Etiquetas disponibles</h2>
+      <div class="drag-container" id="source-container">
+        <div class="drag-item" draggable="true" data-tag="label1">
+          &lt;label&gt;
+        </div>
+        <div class="drag-item" draggable="true" data-tag="input1">
+          &lt;input type="text"&gt;
+        </div>
+        <div class="drag-item" draggable="true" data-tag="label2">
+          &lt;label&gt;
+        </div>
+        <div class="drag-item" draggable="true" data-tag="input2">
+          &lt;input type="email"&gt;
+        </div>
+        <div class="drag-item" draggable="true" data-tag="label3">
+          &lt;label&gt;
+        </div>
+        <div class="drag-item" draggable="true" data-tag="textarea">
+          &lt;textarea&gt;
+        </div>
+        <div class="drag-item" draggable="true" data-tag="button">
+          &lt;button type="submit"&gt;
+        </div>
+      </div>
+    </section>
+
+    <section class="panel form-panel">
+      <h2>Formulario</h2>
+      <div class="form-builder">
+        <div class="form-row">
+          <span class="row-label">Campo 1: Nombre</span>
+          <div class="drop-zone" data-expect="label1"></div>
+          <div class="drop-zone" data-expect="input1"></div>
+        </div>
+        <div class="form-row">
+          <span class="row-label">Campo 2: Email</span>
+          <div class="drop-zone" data-expect="label2"></div>
+          <div class="drop-zone" data-expect="input2"></div>
+        </div>
+        <div class="form-row">
+          <span class="row-label">Campo 3: Comentarios</span>
+          <div class="drop-zone" data-expect="label3"></div>
+          <div class="drop-zone" data-expect="textarea"></div>
+        </div>
+        <div class="form-row">
+          <span class="row-label">Enviar</span>
+          <div class="drop-zone" data-expect="button"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel inspector-panel">
+      <h2>Resultado Inspector HTML</h2>
+      <div class="code-preview">
+        <pre><code>&lt;form&gt;
+  &lt;div&gt;
+    <span id="code-l1">&lt;!-- vacío --&gt;</span>
+    <span id="code-i1">&lt;!-- vacío --&gt;</span>
+  &lt;/div&gt;
+  &lt;div&gt;
+    <span id="code-l2">&lt;!-- vacío --&gt;</span>
+    <span id="code-i2">&lt;!-- vacío --&gt;</span>
+  &lt;/div&gt;
+  &lt;div&gt;
+    <span id="code-l3">&lt;!-- vacío --&gt;</span>
+    <span id="code-t1">&lt;!-- vacío --&gt;</span>
+  &lt;/div&gt;
+  <span id="code-b1">&lt;!-- vacío --&gt;</span>
+&lt;/form&gt;</code></pre>
+      </div>
+      <div class="live-preview">
+        <div id="preview-placeholder">
+          La previsualización web aparecerá al comprobar
+        </div>
+        <div id="preview-content" class="hidden"></div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<style>
+  .game-container {
+    max-width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 15px;
+    font-family:
+      system-ui,
+      -apple-system,
+      sans-serif;
+    color: #1a1a1a;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+  .game-header {
+    margin-bottom: 10px;
+    flex-shrink: 0;
+  }
+  .game-header h1 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin: 0 0 10px 0;
+  }
+  .header-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f8f9fa;
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+  }
+  .stats {
+    display: flex;
+    gap: 30px;
+    font-size: 1.05rem;
+  }
+  .actions {
+    display: flex;
+    gap: 8px;
+  }
+  .actions button {
+    padding: 6px 14px;
+    border: 1px solid #ced4da;
+    background: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+  }
+  .actions button:hover:not(:disabled) {
+    background: #e9ecef;
+    border-color: #adb5bd;
+  }
+  .actions button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  #btn-jugar-nv1 {
+    background: #212529;
+    color: white;
+    border-color: #212529;
+  }
+  #btn-jugar-nv1:hover:not(:disabled) {
+    background: #000;
+  }
+  .alert-message {
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 0.95rem;
+    display: none;
+    flex-shrink: 0;
+  }
+  .alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+  }
+  .alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+  }
+  .game-board {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr 1.3fr;
+    gap: 15px;
+    flex-grow: 1;
+    min-height: 0;
+    margin-bottom: 10px;
+  }
+  .panel {
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+  .panel h2 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin: 0 0 15px 0;
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 8px;
+    flex-shrink: 0;
+  }
+  .drag-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow-y: auto;
+    flex-grow: 1;
+    padding-right: 4px;
+  }
+  .drag-item {
+    padding: 10px 14px;
+    background: #f8f9fa;
+    border: 1px dashed #ced4da;
+    border-radius: 6px;
+    cursor: grab;
+    font-family: monospace;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-align: center;
+    user-select: none;
+    transition:
+      background 0.2s,
+      border-color 0.2s;
+  }
+  .drag-item:hover {
+    background: #e9ecef;
+    border-color: #adb5bd;
+  }
+  .drag-item.dragging {
+    opacity: 0.4;
+    cursor: grabbing;
+  }
+  .form-builder {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    overflow-y: auto;
+    flex-grow: 1;
+  }
+.form-row { 
+    background: #f8f9fa; 
+    border: 1px solid #e9ecef; 
+    border-radius: 8px; 
+    padding: 6px 12px; /* Reducido para evitar el scroll */
+    display: flex; 
+    align-items: center; 
+    gap: 10px; 
+  }
+  .row-label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    width: 140px;
+    color: #495057;
+  }
+.drop-zone { 
+    border: 2px dashed #dee2e6; 
+    border-radius: 6px; 
+    min-height: 36px; /* Reducido para que todo quepa en pantalla */
+    flex-grow: 1; 
+    background: #fff; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    padding: 2px; 
+    transition: background 0.2s, border-color 0.2s; 
+    min-width: 80px; 
+  }
+  .drop-zone.drag-over {
+    background: #e8f0fe;
+    border-color: #1a73e8;
+  }
+  .code-preview {
+    background: #212529;
+    color: #f8f9fa;
+    border-radius: 8px;
+    padding: 12px;
+    font-family: monospace;
+    font-size: 0.9rem;
+    overflow-y: auto;
+    height: 50%;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+  }
+  .code-preview pre {
+    margin: 0;
+    white-space: pre-wrap;
+  }
+  .code-preview span {
+    color: #6c757d;
+  }
+  .code-preview .filled-code {
+    color: #4ec9b0;
+    font-weight: bold;
+  }
+  .live-preview {
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    padding: 15px;
+    background: #fff;
+    overflow-y: auto;
+    height: calc(50% - 15px);
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #preview-placeholder {
+    color: #6c757d;
+    font-style: italic;
+    font-size: 0.9rem;
+    text-align: center;
+  }
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  .modal-content {
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 12px;
+    max-width: 500px;
+    width: 90%;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.3s ease-out;
+  }
+  .modal-content h2 {
+    margin-top: 0;
+    font-size: 1.4rem;
+    color: #212529;
+  }
+  .modal-content hr {
+    border: 0;
+    border-top: 1px solid #dee2e6;
+    margin: 12px 0;
+  }
+  .reglas-lista {
+    padding-left: 18px;
+    margin-bottom: 20px;
+  }
+  .reglas-lista li {
+    margin-bottom: 10px;
+    line-height: 1.4;
+    font-size: 0.9rem;
+  }
+  .btn-modal {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background: #212529;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .btn-modal:hover {
+    background: #000;
+  }
+  .hidden {
+    display: none !important;
+  }
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>
+
+<script>
+  let tiempoRestante = 90;
+  let timerInterval;
+  let juegoIniciado = false;
+  let puntuacion = 0;
+  let intentosFallidos = 0;
+
+  const btnJugar = document.getElementById("btn-jugar-nv1");
+  const btnBarajar = document.getElementById("btn-barajar-nv1");
+  const btnComprobar = document.getElementById("btn-comprobar-nv1");
+  const btnReiniciar = document.getElementById("btn-reiniciar-nv1");
+  const btnSiguiente = document.getElementById("btn-siguiente-nv1");
+  const modalReglas = document.getElementById("modal-reglas-nv1");
+  const btnAceptarReglas = document.getElementById("btn-aceptar-reglas-nv1");
+  const alertMsg = document.querySelector(".alert-msg-nv1") as HTMLElement;
+  const scoreDisplay = document.querySelector(".score-nv1") as HTMLElement;
+  const timerDisplay = document.getElementById("timer-nv1");
+
+  const sourceContainer = document.getElementById("source-container");
+  const zones = document.querySelectorAll(".drop-zone");
+
+  function actualizarTimerDisplay() {
+    const minutos = String(Math.floor(tiempoRestante / 60)).padStart(2, "0");
+    const segundos = String(tiempoRestante % 60).padStart(2, "0");
+    timerDisplay.textContent = `${minutos}:${segundos}`;
+  }
+
+  function iniciarTimer() {
+    timerInterval = setInterval(() => {
+      tiempoRestante--;
+      actualizarTimerDisplay();
+      if (tiempoRestante <= 0) {
+        finalizarJuego(false, "¡Se agotó el tiempo! Inténtalo de nuevo.");
+      }
+    }, 1000);
+  }
+
+  btnJugar.addEventListener("click", () => {
+    modalReglas.style.display = "flex";
+  });
+  btnAceptarReglas.addEventListener("click", () => {
+    modalReglas.style.display = "none";
+    juegoIniciado = true;
+    btnJugar.disabled = true;
+    btnBarajar.disabled = false;
+    btnComprobar.disabled = false;
+    btnReiniciar.disabled = false;
+    habilitarArrastrar(true);
+    iniciarTimer();
+  });
+
+  function habilitarArrastrar(status) {
+    document.querySelectorAll(".drag-item").forEach((item: HTMLElement) => {
+      item.setAttribute("draggable", String(status));
+    });
+  }
+
+  // Lógica Drag and Drop
+  document.querySelectorAll(".drag-item").forEach((item) => {
+    item.addEventListener("dragstart", () => {
+      if (juegoIniciado) item.classList.add("dragging");
+    });
+    item.addEventListener("dragend", () => {
+      item.classList.remove("dragging");
+      actualizarInspectorEInteractivo();
+    });
+  });
+
+  zones.forEach((zone) => {
+    zone.addEventListener("dragover", (e) => {
+      e.preventDefault();
+      if (juegoIniciado) zone.classList.add("drag-over");
+    });
+    zone.addEventListener("dragleave", () => {
+      zone.classList.remove("drag-over");
+    });
+    zone.addEventListener("drop", () => {
+      zone.classList.remove("drag-over");
+      const item = document.querySelector(".dragging");
+      if (item && juegoIniciado) {
+        zone.appendChild(item);
+      }
+    });
+  });
+
+  sourceContainer.addEventListener("dragover", (e) => {
+    e.preventDefault();
+  });
+  sourceContainer.addEventListener("drop", () => {
+    const item = document.querySelector(".dragging");
+    if (item && juegoIniciado) sourceContainer.appendChild(item);
+  });
+
+  function actualizarInspectorEInteractivo() {
+    const mapeo = {
+      label1: { id: "code-l1", str: "&lt;label&gt;Nombre&lt;/label&gt;" },
+      input1: { id: "code-i1", str: '&lt;input type="text"&gt;' },
+      label2: { id: "code-l2", str: "&lt;label&gt;Email&lt;/label&gt;" },
+      input2: { id: "code-i2", str: '&lt;input type="email"&gt;' },
+      label3: { id: "code-l3", str: "&lt;label&gt;Comentarios&lt;/label&gt;" },
+      textarea: { id: "code-t1", str: "&lt;textarea&gt;&lt;/textarea&gt;" },
+      button: {
+        id: "code-b1",
+        str: '&lt;button type="submit"&gt;Enviar&lt;/button&gt;',
+      },
+    };
+
+    Object.keys(mapeo).forEach((key) => {
+      const el = document.getElementById(mapeo[key].id);
+      el.innerHTML = "&lt;!-- vacío --&gt;";
+      el.className = "";
+    });
+
+    zones.forEach((zone) => {
+      const hijo = zone.querySelector(".drag-item");
+      if (hijo) {
+        const tag = hijo.getAttribute("data-tag");
+        if (mapeo[tag]) {
+          const codeEl = document.getElementById(mapeo[tag].id);
+          codeEl.innerHTML = mapeo[tag].str;
+          codeEl.className = "filled-code";
+        }
+      }
+    });
+  }
+
+btnComprobar.addEventListener('click', () => {
+    alertMsg.style.display = "none";
+    alertMsg.className = "alert-message alert-msg-nv1";
+
+    let aciertos = 0;
+    zones.forEach(zone => {
+      const esperado = zone.getAttribute('data-expect');
+      const hijo = zone.querySelector('.drag-item');
+      if (hijo && hijo.getAttribute('data-tag') === esperado) {
+        aciertos++;
+      }
+    });
+
+    // Si colocó las 7 etiquetas correctamente
+    if (aciertos === zones.length) {
+      // Se restan 20 puntos por cada intento fallido previo (mínimo de nota: 40)
+      puntuacion = Math.max(100 - (intentosFallidos * 20), 40);
+      scoreDisplay.textContent = String(puntuacion);
+      
+      finalizarJuego(true, `¡Excelente! Has estructurado el formulario correctamente. Puntuación final: ${puntuacion}/100`);
+    } else {
+      // Si falla, aumentamos el contador de errores
+      intentosFallidos++;
+      
+      // Mostramos el progreso actual pero no da por ganado el juego
+      let progresoActual = Math.round((aciertos / zones.length) * 100);
+      scoreDisplay.textContent = String(progresoActual);
+
+      alertMsg.textContent = "El formulario está incorrecto o incompleto. Revisa el orden de las etiquetas e intenta de nuevo.";
+      alertMsg.className = "alert-message alert-danger alert-msg-nv1";
+      alertMsg.style.display = "block";
+    }
+  });
+
+  function finalizarJuego(esExito, mensaje) {
+    juegoIniciado = false;
+    clearInterval(timerInterval);
+    alertMsg.textContent = mensaje;
+
+    if (esExito) {
+      alertMsg.className = "alert-message alert-success alert-msg-nv1";
+      btnSiguiente.disabled = false;
+      btnComprobar.disabled = true;
+      habilitarArrastrar(false);
+
+      // Renderizar el formulario en HTML nativo puro y crudo (sin nada de CSS)
+      const placeholder = document.getElementById("preview-placeholder");
+      const content = document.getElementById("preview-content");
+
+      if (placeholder && content) {
+        placeholder.classList.add("hidden");
+        content.classList.remove("hidden");
+        content.innerHTML = `
+          <form>
+            <div>
+              <label>Nombre</label>
+              <input type="text" disabled />
+            </div>
+            <div>
+              <label>Email</label>
+              <input type="email" disabled />
+            </div>
+            <div>
+              <label>Comentarios</label>
+              <textarea disabled></textarea>
+            </div>
+            <button type="button" disabled>Enviar</button>
+          </form>
+        `;
+      }
+    } else {
+      alertMsg.className = "alert-message alert-danger alert-msg-nv1";
+    }
+    alertMsg.style.display = "block";
+  }
+  btnReiniciar.addEventListener("click", () => {
+    intentosFallidos = 0;
+    clearInterval(timerInterval);
+    tiempoRestante = 90;
+    puntuacion = 0;
+    juegoIniciado = false;
+    actualizarTimerDisplay();
+    scoreDisplay.textContent = "0";
+    alertMsg.style.display = "none";
+
+    document
+      .querySelectorAll(".drag-item")
+      .forEach((item) => sourceContainer.appendChild(item));
+    actualizarInspectorEInteractivo();
+    habilitarArrastrar(false);
+
+    btnJugar.disabled = false;
+    btnBarajar.disabled = true;
+    btnComprobar.disabled = true;
+    btnReiniciar.disabled = true;
+    btnSiguiente.disabled = true;
+  });
+
+  btnBarajar.addEventListener("click", () => {
+    if (!juegoIniciado) return;
+    const items = Array.from(sourceContainer.children);
+    items.sort(() => Math.random() - 0.5);
+    items.forEach((item) => sourceContainer.appendChild(item));
+  });
+
+btnSiguiente.addEventListener('click', () => {
+    window.dispatchEvent(new CustomEvent('paso-al-2', { detail: { puntaje: puntuacion } }));
+  });
+</script>

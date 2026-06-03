@@ -1,0 +1,74 @@
+---
+import Nivel1 from '../components/Nivel.astro';
+import Nivel2 from '../components/Nivel2.astro';
+---
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Juego Web - HTML y CSS</title>
+  </head>
+  <body>
+    <div id="nv1" style="display: block;"><Nivel1 /></div>
+    <div id="nv2" style="display: none;"><Nivel2 /></div>
+
+    <div id="pantalla-final" style="display: none; text-align: center; font-family: system-ui, sans-serif; padding: 50px;">
+      <h1 style="font-size: 2.5rem; color: #212529;">¡Juego Completado!</h1>
+      <p style="font-size: 1.5rem; margin: 20px 0;">Tu puntaje final promedio es:</p>
+      <div style="font-size: 4rem; font-weight: bold; color: #10b981; margin-bottom: 20px;" id="nota-final">0 / 100</div>
+      
+      <div id="mensaje-escala" style="font-size: 1.3rem; font-weight: bold; padding: 15px; max-width: 500px; margin: 0 auto 30px auto; border-radius: 8px;"></div>
+      
+      <button id="btn-finalizar-todo" style="padding: 12px 30px; font-size: 1.1rem; font-weight: bold; background: #212529; color: white; border: none; border-radius: 6px; cursor: pointer; transition: background 0.2s;">
+        Finalizar y Reiniciar Juego
+      </button>
+    </div>
+
+    <script>
+      let puntajeNivel1 = 0;
+
+      // Escuchar cuando termina el Nivel 1 y guardar su puntaje numérico explícito
+      window.addEventListener('paso-al-2', (e: CustomEvent) => {
+        puntajeNivel1 = Number(e.detail.puntaje) || 0; 
+        document.getElementById('nv1').style.display = 'none';
+        document.getElementById('nv2').style.display = 'block';
+      });
+
+      // Escuchar cuando finaliza el Nivel 2
+      window.addEventListener('finalizar-juego-total', (e: CustomEvent) => {
+        const puntajeNivel2 = Number(e.detail.puntaje) || 0;
+        document.getElementById('nv2').style.display = 'none';
+        
+        // Calcular promedio matemático real
+        const promedioFinal = Math.round((puntajeNivel1 + puntajeNivel2) / 2);
+        
+        const pantalla = document.getElementById('pantalla-final');
+        const notaDisplay = document.getElementById('nota-final');
+        const escalaDisplay = document.getElementById('mensaje-escala');
+        
+        notaDisplay.textContent = `${promedioFinal} / 100`;
+        pantalla.style.display = 'block';
+
+        // Mensajes adaptados para los estudiantes
+        if (promedioFinal === 100) {
+          escalaDisplay.textContent = "¡Excelente trabajo! Dominas perfectamente HTML y CSS.";
+          escalaDisplay.style.backgroundColor = "#d4edda";
+          escalaDisplay.style.color = "#155724";
+        } else if (promedioFinal >= 70) {
+          escalaDisplay.textContent = "¡Buen trabajo! Has logrado completar los desafíos con éxito.";
+          escalaDisplay.style.backgroundColor = "#e0f2fe";
+          escalaDisplay.style.color = "#0369a1";
+        } else {
+          escalaDisplay.textContent = "¡Inténtalo de nuevo para mejorar tu puntaje! Puedes hacerlo mejor.";
+          escalaDisplay.style.backgroundColor = "#fee2e2";
+          escalaDisplay.style.color = "#991b1b";
+        }
+      });
+
+      // Botón para recargar y reiniciar todo desde cero
+      document.getElementById('btn-finalizar-todo').addEventListener('click', () => {
+        window.location.reload();
+      });
+    </script>
+  </body>
+</html>

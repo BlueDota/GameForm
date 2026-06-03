@@ -1,0 +1,771 @@
+---
+// src/components/Nivel2.astro
+---
+
+<div class="game-container">
+  <div class="modal-overlay" id="modal-reglas">
+    <div class="modal-content">
+      <h2>📜 Reglas del Juego - Nivel 2</h2>
+      <hr />
+      <ul class="reglas-lista">
+        <li><strong>Objetivo:</strong> Estilizar el formulario del Nivel 1 usando selectores de etiqueta CSS.</li>
+        <li><strong>Calificación interactiva:</strong> Cada bloque de código se validará automáticamente en tiempo real cuando elijas las opciones correctas.</li>
+        <li><strong>Previsualización:</strong> Verás cómo el diseño se transforma de inmediato en un formulario moderno y profesional.</li>
+        <li><strong>Tiempo límite:</strong> Dispones de 1 minuto y medio (01:30) para alcanzar los 100 puntos.</li>
+      </ul>
+      <button id="btn-aceptar-reglas" class="btn-modal">¡Entendido, a diseñar!</button>
+    </div>
+  </div>
+
+  <header class="game-header">
+    <h1>Estiliza el formulario - Selectores de Etiqueta CSS</h1>
+    <div class="header-controls">
+      <div class="stats">
+        <span><strong>Puntuación:</strong> <span id="score">0</span> / 100</span>
+        <span><strong>Tiempo:</strong> <span id="timer">01:30</span></span>
+      </div>
+      <div class="actions">
+        <button id="btn-jugar">Jugar</button>
+        <button id="btn-barajar" disabled>Barajar</button>
+        <button id="btn-comprobar" disabled>Comprobar</button>
+        <button id="btn-reiniciar" disabled>Reiniciar</button>
+        <button id="btn-siguiente" disabled>Siguiente nivel</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="alert-message" id="alert-msg"></div>
+
+  <main class="game-board">
+    
+    <section class="panel css-panel">
+      <h2>Editor CSS</h2>
+      <div class="css-editor-container">
+        
+        <div class="css-block" id="block-form">
+          <span class="css-selector"><span class="highlight-tag">form</span> &#123;</span>
+          <div class="css-property">
+            background-color: 
+            <select class="css-select" data-correct="#ffffff" disabled>
+              <option value="">-- Seleccionar --</option>
+              <option value="#ffffff">#ffffff (Blanco)</option>
+              <option value="#212529">#212529 (Oscuro)</option>
+              <option value="transparent">transparent</option>
+            </select>;
+          </div>
+          <div class="css-property">
+            padding: 
+            <select class="css-select" data-correct="24px" disabled>
+              <option value="">-- Seleccionar --</option>
+              <option value="0px">0px</option>
+              <option value="5px">5px</option>
+              <option value="24px">24px</option>
+            </select>;
+          </div>
+          <span class="css-closer">&#125;</span>
+        </div>
+
+        <div class="css-block" id="block-div">
+          <span class="css-selector"><span class="highlight-tag">div</span> &#123;</span>
+          <div class="css-property">
+            margin-bottom: 
+            <select class="css-select" data-correct="16px" disabled>
+              <option value="">-- Seleccionar --</option>
+              <option value="16px">16px</option>
+              <option value="0px">0px</option>
+              <option value="100px">100px</option>
+            </select>;
+          </div>
+          <span class="css-closer">&#125;</span>
+        </div>
+
+        <div class="css-block" id="block-label">
+          <span class="css-selector"><span class="highlight-tag">label</span> &#123;</span>
+          <div class="css-property">
+            font-weight: 
+            <select class="css-select" data-correct="600" disabled>
+              <option value="">-- Seleccionar --</option>
+              <option value="normal">normal</option>
+              <option value="600">600 (Semi-negrita)</option>
+              <option value="italic">italic</option>
+            </select>;
+          </div>
+          <div class="css-property">
+            display: 
+            <select class="css-select" data-correct="block" disabled>
+              <option value="">-- Seleccionar --</option>
+              <option value="inline">inline</option>
+              <option value="block">block</option>
+            </select>;
+          </div>
+          <span class="css-closer">&#125;</span>
+        </div>
+
+        <div class="css-block" id="block-input">
+          <span class="css-selector"><span class="highlight-tag">input</span>, <span class="highlight-tag">textarea</span> &#123;</span>
+          <div class="css-property">
+            width: 
+            <select class="css-select" data-correct="100%" disabled>
+              <option value="">-- Seleccionar --</option>
+              <option value="50%">50%</option>
+              <option value="100%">100%</option>
+              <option value="auto">auto</option>
+            </select>;
+          </div>
+          <div class="css-property">
+            border: 1px solid 
+            <select class="css-select" data-correct="#dee2e6" disabled>
+              <option value="">-- Seleccionar --</option>
+              <option value="#dee2e6">#dee2e6 (Gris suave)</option>
+              <option value="red">red</option>
+              <option value="black">black</option>
+            </select>;
+          </div>
+          <span class="css-closer">&#125;</span>
+        </div>
+
+        <div class="css-block" id="block-button">
+          <span class="css-selector"><span class="highlight-tag">button</span> &#123;</span>
+          <div class="css-property">
+            color: 
+            <select class="css-select" data-correct="#ffffff" disabled>
+              <option value="">-- Seleccionar --</option>
+              <option value="#000000">#000000</option>
+              <option value="#ffffff">#ffffff (Blanco)</option>
+            </select>;
+          </div>
+          <div class="css-property">
+            background-color: 
+            <select class="css-select" data-correct="#4f46e5" disabled>
+              <option value="">-- Seleccionar --</option>
+              <option value="#4f46e5">#4f46e5 (Indigo moderno)</option>
+              <option value="yellow">yellow</option>
+              <option value="transparent">transparent</option>
+            </select>;
+          </div>
+          <span class="css-closer">&#125;</span>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="panel result-panel">
+      <h2>Previsualización en tiempo real</h2>
+      <div class="web-preview-container">
+        <div id="sandbox-preview">
+          <form onsubmit="event.preventDefault();">
+            <div>
+              <label>Campo 1: Nombre</label>
+              <input type="text" placeholder="Ej. Juan">
+            </div>
+            <div>
+              <label>Campo 2: Email</label>
+              <input type="email" placeholder="juan@example.com">
+            </div>
+            <div>
+              <label>Campo 3: Comentarios</label>
+              <textarea placeholder="Escribe aquí..."></textarea>
+            </div>
+            <button type="submit">Enviar</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<style>
+  .game-container {
+    max-width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 15px;
+    font-family: system-ui, -apple-system, sans-serif;
+    color: #1a1a1a;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  .game-header {
+    margin-bottom: 10px;
+    flex-shrink: 0;
+  }
+
+  .game-header h1 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin: 0 0 10px 0;
+  }
+
+  .header-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f8f9fa;
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+  }
+
+  .stats {
+    display: flex;
+    gap: 30px;
+    font-size: 1.05rem;
+  }
+
+  .actions {
+    display: flex;
+    gap: 8px;
+  }
+
+  .actions button {
+    padding: 6px 14px;
+    border: 1px solid #ced4da;
+    background: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+  }
+
+  .actions button:hover:not(:disabled) {
+    background: #e9ecef;
+    border-color: #adb5bd;
+  }
+
+  .actions button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  #btn-jugar {
+    background: #212529;
+    color: white;
+    border-color: #212529;
+  }
+  #btn-jugar:hover:not(:disabled) {
+    background: #000;
+  }
+
+  .alert-message {
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 0.95rem;
+    display: none;
+    flex-shrink: 0;
+  }
+  .alert-success {
+    display: block;
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+  }
+  .alert-danger {
+    display: block;
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+  }
+
+  .game-board {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 15px;
+    flex-grow: 1;
+    min-height: 0;
+    margin-bottom: 10px;
+  }
+
+  .panel {
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 15px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  .panel h2 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin: 0 0 15px 0;
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 8px;
+    flex-shrink: 0;
+  }
+
+  .css-editor-container {
+    background: #1e1e1e;
+    color: #d4d4d4;
+    padding: 15px;
+    border-radius: 8px;
+    font-family: monospace;
+    font-size: 0.95rem;
+    overflow-y: auto;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .css-block {
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid transparent;
+    transition: all 0.3s;
+  }
+
+  /* Clases de validación por bloque */
+  .block-correct {
+    background: rgba(46, 160, 67, 0.15);
+    border-color: #2ea043;
+  }
+
+  .css-selector {
+    color: #dcdcaa;
+    font-weight: bold;
+  }
+
+  .highlight-tag {
+    color: #569cd6;
+  }
+
+  .css-property {
+    padding-left: 20px;
+    margin: 4px 0;
+    color: #9cdcfe;
+  }
+
+  .css-select {
+    background: #2d2d2d;
+    color: #ce9178;
+    border: 1px solid #3c3c3c;
+    border-radius: 4px;
+    padding: 2px 4px;
+    font-family: monospace;
+    font-size: 0.9rem;
+    cursor: pointer;
+  }
+
+  .css-select:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .css-closer {
+    color: #dcdcaa;
+  }
+
+  .web-preview-container {
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    padding: 25px;
+    background: #f1f5f9;
+    overflow-y: auto;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #sandbox-preview {
+    width: 100%;
+    max-width: 360px;
+  }
+
+  /* ESTILOS BASE INICIALES CRUDEZAS */
+  #sandbox-preview form {
+    background-color: transparent;
+    padding: 0;
+    width: 100%;
+    transition: all 0.3s ease;
+  }
+
+  #sandbox-preview div {
+    margin-bottom: 0px;
+    transition: all 0.3s ease;
+  }
+
+  #sandbox-preview label {
+    font-weight: normal;
+    display: inline;
+    font-size: 0.9rem;
+    color: #334155;
+    margin-bottom: 0px;
+    transition: all 0.3s ease;
+  }
+
+  #sandbox-preview input, #sandbox-preview textarea {
+    width: auto;
+    border: 1px solid #767676;
+    background-color: #fff;
+    font-family: inherit;
+    font-size: 0.9rem;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+  }
+
+  #sandbox-preview textarea {
+    height: 50px;
+    resize: none;
+  }
+
+  #sandbox-preview button {
+    color: initial;
+    background-color: initial;
+    border: 1px solid #767676;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+  }
+
+  /* MODAL */
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+
+  .modal-content {
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 12px;
+    max-width: 500px;
+    width: 90%;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    animation: fadeIn 0.3s ease-out;
+  }
+
+  .modal-content h2 {
+    margin-top: 0;
+    font-size: 1.4rem;
+    color: #212529;
+  }
+
+  .modal-content hr {
+    border: 0;
+    border-top: 1px solid #dee2e6;
+    margin: 12px 0;
+  }
+
+  .reglas-lista {
+    padding-left: 18px;
+    margin-bottom: 20px;
+  }
+
+  .reglas-lista li {
+    margin-bottom: 10px;
+    line-height: 1.4;
+    font-size: 0.9rem;
+  }
+
+  .btn-modal {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background: #212529;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .btn-modal:hover {
+    background: #000;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+
+<script>
+  let tiempoRestante = 90;
+  let timerInterval;
+  let juegoIniciado = false;
+  let puntuacion = 0;
+  let intentosFallidosN2 = 0;
+  let puntuacionN2 = 0;
+
+
+  const btnJugar = document.getElementById('btn-jugar');
+  const btnBarajar = document.getElementById('btn-barajar');
+  const btnComprobar = document.getElementById('btn-comprobar');
+  const btnReiniciar = document.getElementById('btn-reiniciar');
+  const btnSiguiente = document.getElementById('btn-siguiente');
+  const modalReglas = document.getElementById('modal-reglas');
+  const btnAceptarReglas = document.getElementById('btn-aceptar-reglas');
+  
+  const timerDisplay = document.getElementById('timer');
+  const scoreDisplay = document.getElementById('score');
+  const alertMsg = document.getElementById('alert-msg');
+  
+  const selectElements = document.querySelectorAll('.css-select');
+  const sandboxForm = document.querySelector('#sandbox-preview form');
+  const sandboxDivs = document.querySelectorAll('#sandbox-preview div');
+  const sandboxLabels = document.querySelectorAll('#sandbox-preview label');
+  const sandboxInputs = document.querySelectorAll('#sandbox-preview input, #sandbox-preview textarea');
+  const sandboxButton = document.querySelector('#sandbox-preview button');
+
+  function actualizarTimerDisplay() {
+    const minutos = String(Math.floor(tiempoRestante / 60)).padStart(2, '0');
+    const segundos = String(tiempoRestante % 60).padStart(2, '0');
+    timerDisplay.textContent = `${minutos}:${segundos}`;
+  }
+
+  function iniciarTimer() {
+    timerInterval = setInterval(() => {
+      tiempoRestante--;
+      actualizarTimerDisplay();
+      if (tiempoRestante <= 0) {
+        finalizarJuego(false, "¡Se agotó el tiempo! Inténtalo de nuevo.");
+      }
+    }, 1000);
+  }
+
+  btnJugar.addEventListener('click', () => {
+    modalReglas.style.display = "flex";
+  });
+
+  btnAceptarReglas.addEventListener('click', () => {
+    modalReglas.style.display = "none";
+    juegoIniciado = true;
+    btnJugar.disabled = true;
+    btnBarajar.disabled = false;
+    btnComprobar.disabled = false;
+    btnReiniciar.disabled = false;
+    
+    selectElements.forEach(select => select.disabled = false);
+    iniciarTimer();
+  });
+
+  btnReiniciar.addEventListener('click', reiniciarJuego);
+
+  btnBarajar.addEventListener('click', () => {
+    if (!juegoIniciado) return;
+    selectElements.forEach(select => {
+      if (Math.random() > 0.4) select.value = "";
+    });
+    evaluarBloquesYEstilos();
+  });
+
+  selectElements.forEach(select => {
+    select.addEventListener('change', evaluarBloquesYEstilos);
+  });
+
+  function evaluarBloquesYEstilos() {
+    // Captura de valores elegidos
+    const formBg = selectElements[0].value;
+    const formPad = selectElements[1].value;
+    const divMargin = selectElements[2].value;
+    const labelWeight = selectElements[3].value;
+    const labelDisplay = selectElements[4].value;
+    const inputWidth = selectElements[5].value;
+    const inputBorderColor = selectElements[6].value;
+    const btnColor = selectElements[7].value;
+    const btnBg = selectElements[8].value;
+
+    let aciertosBloques = 0;
+
+    // 1. Validar y aplicar Bloque FORM (Estilo moderno real)
+    if (formBg === '#ffffff' && formPad === '24px') {
+      document.getElementById('block-form').classList.add('block-correct');
+      aciertosBloques++;
+      if(sandboxForm) {
+        sandboxForm.style.backgroundColor = '#ffffff';
+        sandboxForm.style.padding = '24px';
+        sandboxForm.style.borderRadius = '12px';
+        sandboxForm.style.boxShadow = '0 4px 12px rgba(0,0,0,0.05)';
+        sandboxForm.style.border = '1px solid #e2e8f0';
+      }
+    } else {
+      document.getElementById('block-form').classList.remove('block-correct');
+      if(sandboxForm) {
+        sandboxForm.style.backgroundColor = formBg || 'transparent';
+        sandboxForm.style.padding = formPad || '0px';
+        sandboxForm.style.boxShadow = 'none';
+        sandboxForm.style.border = 'none';
+      }
+    }
+
+    // 2. Validar y aplicar Bloque DIV
+    if (divMargin === '16px') {
+      document.getElementById('block-div').classList.add('block-correct');
+      aciertosBloques++;
+      sandboxDivs.forEach(div => div.style.marginBottom = '16px');
+    } else {
+      document.getElementById('block-div').classList.remove('block-correct');
+      sandboxDivs.forEach(div => div.style.marginBottom = divMargin || '0px');
+    }
+
+    // 3. Validar y aplicar Bloque LABEL
+    if (labelWeight === '600' && labelDisplay === 'block') {
+      document.getElementById('block-label').classList.add('block-correct');
+      aciertosBloques++;
+      sandboxLabels.forEach(label => {
+        label.style.fontWeight = '600';
+        label.style.display = 'block';
+        label.style.marginBottom = '6px';
+        label.style.color = '#1e293b';
+      });
+    } else {
+      document.getElementById('block-label').classList.remove('block-correct');
+      sandboxLabels.forEach(label => {
+        label.style.fontWeight = labelWeight || 'normal';
+        label.style.display = labelDisplay || 'inline';
+        label.style.marginBottom = '0px';
+      });
+    }
+
+    // 4. Validar y aplicar Bloque INPUT/TEXTAREA
+    if (inputWidth === '100%' && inputBorderColor === '#dee2e6') {
+      document.getElementById('block-input').classList.add('block-correct');
+      aciertosBloques++;
+      sandboxInputs.forEach(input => {
+        input.style.width = '100%';
+        input.style.border = '1px solid #cbd5e1';
+        input.style.borderRadius = '6px';
+        input.style.padding = '8px 12px';
+        input.style.outline = 'none';
+      });
+    } else {
+      document.getElementById('block-input').classList.remove('block-correct');
+      sandboxInputs.forEach(input => {
+        input.style.width = inputWidth || 'auto';
+        input.style.border = inputBorderColor ? `1px solid ${inputBorderColor}` : '1px solid #767676';
+        input.style.borderRadius = '0px';
+        input.style.padding = '1px';
+      });
+    }
+
+    // 5. Validar y aplicar Bloque BUTTON (Estilo Indigo elegante)
+    if (btnColor === '#ffffff' && btnBg === '#4f46e5') {
+      document.getElementById('block-button').classList.add('block-correct');
+      aciertosBloques++;
+      if(sandboxButton) {
+        sandboxButton.style.color = '#ffffff';
+        sandboxButton.style.backgroundColor = '#4f46e5';
+        sandboxButton.style.padding = '10px 16px';
+        sandboxButton.style.border = 'none';
+        sandboxButton.style.borderRadius = '6px';
+        sandboxButton.style.fontWeight = '600';
+        sandboxButton.style.width = '100%';
+        sandboxButton.style.cursor = 'pointer';
+      }
+    } else {
+      document.getElementById('block-button').classList.remove('block-correct');
+      if(sandboxButton) {
+        sandboxButton.style.color = btnColor || 'initial';
+        sandboxButton.style.backgroundColor = btnBg || 'initial';
+        sandboxButton.style.padding = '2px 6px';
+        sandboxButton.style.border = '1px solid #767676';
+        sandboxButton.style.borderRadius = '0px';
+        sandboxButton.style.width = 'auto';
+      }
+    }
+
+    // Actualizar puntuación basada en los 5 bloques correctos (20 pts cada uno)
+    puntuacion = aciertosBloques * 20;
+    scoreDisplay.textContent = String(puntuacion);
+  }
+
+  // Comprobar valida de forma general al dar clic
+btnComprobar.addEventListener('click', () => {
+    alertMsg.style.display = "none";
+    alertMsg.className = "alert-message";
+    
+    // Ejecuta la validación de tus menús desplegables
+    evaluarBloquesYEstilos();
+
+    // Verificamos si las respuestas son correctas (puntuación alcanza 100)
+    if (puntuacion === 100) {
+      // Aplica el descuento por intentos fallidos sobre la nota
+      let notaFinalN2 = Math.max(100 - (intentosFallidosN2 * 20), 40);
+      puntuacion = notaFinalN2; 
+      
+      const scoreElement = document.getElementById('score') || document.getElementById('score-nv2');
+      if (scoreElement) scoreElement.textContent = String(puntuacion);
+
+      finalizarJuego(true, `¡Excelente! Has estilizado el formulario correctamente. Puntuación de nivel: ${puntuacion}/100`);
+    } else {
+      intentosFallidosN2++;
+      
+      alertMsg.textContent = "Aún faltan bloques por estilizar correctamente. ¡Observa cuáles no se han pintado de verde y sigue intentando!";
+      alertMsg.className = "alert-message alert-danger";
+      alertMsg.style.display = "block";
+    }
+  });
+
+  function finalizarJuego(esExito, mensaje) {
+    juegoIniciado = false;
+    clearInterval(timerInterval);
+    
+    alertMsg.textContent = mensaje;
+    if (esExito) {
+      alertMsg.className = "alert-message alert-success";
+      btnSiguiente.disabled = false;
+      btnComprobar.disabled = true;
+      selectElements.forEach(select => select.disabled = true);
+    } else {
+      alertMsg.className = "alert-message alert-danger";
+    }
+    alertMsg.style.display = "block";
+  }
+
+  function reiniciarJuego() {
+    clearInterval(timerInterval);
+    tiempoRestante = 90;
+    puntuacion = 0;
+    juegoIniciado = false;
+    
+    actualizarTimerDisplay();
+    scoreDisplay.textContent = "0";
+    
+    alertMsg.style.display = "none";
+    alertMsg.textContent = "";
+    
+    selectElements.forEach(select => {
+      select.value = "";
+      select.disabled = true;
+    });
+
+    document.querySelectorAll('.css-block').forEach(block => block.classList.remove('block-correct'));
+    evaluarBloquesYEstilos();
+    
+    btnJugar.disabled = false;
+    btnBarajar.disabled = true;
+    btnComprobar.disabled = true;
+    btnReiniciar.disabled = true;
+    btnSiguiente.disabled = true;
+  }
+  // Al final del script actual
+btnSiguiente.addEventListener('click', () => {
+    // Forzamos a leer el texto del marcador numérico en pantalla para evitar desfases de variables
+    const scoreElement = document.getElementById('score') || document.getElementById('score-nv2');
+    const puntajeRealN2 = scoreElement ? Number(scoreElement.textContent) : puntuacion;
+
+    window.dispatchEvent(new CustomEvent('finalizar-juego-total', { 
+      detail: { puntaje: puntajeRealN2 } 
+    }));
+  });
+</script>
