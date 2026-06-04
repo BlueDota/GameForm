@@ -22,7 +22,7 @@
     <div class="header-controls">
       <div class="stats">
         <span><strong>Puntuación:</strong> <span id="score">0</span> / 100</span>
-        <span><strong>Tiempo:</strong> <span id="timer">01:30</span></span>
+        <span><strong>Tiempo:</strong> <span id="timer">01:00</span></span>
       </div>
       <div class="actions">
         <button id="btn-jugar">Jugar</button>
@@ -500,7 +500,7 @@
 </style>
 
 <script>
-  let tiempoRestante = 90;
+  let tiempoRestante = 60;
   let timerInterval;
   let juegoIniciado = false;
   let puntuacion = 0;
@@ -734,7 +734,7 @@ btnComprobar.addEventListener('click', () => {
 
   function reiniciarJuego() {
     clearInterval(timerInterval);
-    tiempoRestante = 90;
+    tiempoRestante = 60;
     puntuacion = 0;
     juegoIniciado = false;
     
