@@ -39,7 +39,7 @@
           ><strong>Puntuación:</strong>
           <span class="score-nv1">0</span> / 100</span
         >
-        <span><strong>Tiempo:</strong> <span id="timer-nv1">01:30</span></span>
+        <span><strong>Tiempo:</strong> <span id="timer-nv1">01:00</span></span>
       </div>
       <div class="actions">
         <button id="btn-jugar-nv1">Jugar</button>
@@ -434,7 +434,7 @@
 </style>
 
 <script>
-  let tiempoRestante = 90;
+  let tiempoRestante = 60;
   let timerInterval;
   let juegoIniciado = false;
   let puntuacion = 0;
@@ -637,7 +637,7 @@ btnComprobar.addEventListener('click', () => {
   btnReiniciar.addEventListener("click", () => {
     intentosFallidos = 0;
     clearInterval(timerInterval);
-    tiempoRestante = 90;
+    tiempoRestante = 60;
     puntuacion = 0;
     juegoIniciado = false;
     actualizarTimerDisplay();
